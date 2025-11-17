@@ -9,6 +9,24 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(moveit_ros_planning_interface REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(tf2_geometry_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
+find_package(moveit_msgs REQUIRED)
+find_package(moveit_visual_tools REQUIRED)
+
+add_executable(point_move src/point_move.cpp)
+ament_target_dependencies(
+  point_move
+  "moveit_ros_planning_interface"
+  "rclcpp"
+  "tf2_geometry_msgs"
+  "geometry_msgs"
+  "moveit_msgs"
+  "moveit_visual_tools"
+)
+
+install(TARGETS point_move
+  DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
