@@ -25,7 +25,21 @@ ament_target_dependencies(
   "moveit_visual_tools"
 )
 
+add_executable(calibration_path src/calibration_path.cpp)
+ament_target_dependencies(
+  calibration_path
+  "moveit_ros_planning_interface"
+  "rclcpp"
+  "tf2_geometry_msgs"
+  "geometry_msgs"
+  "moveit_msgs"
+  "moveit_visual_tools"
+)
+
 install(TARGETS point_move
+  DESTINATION lib/${PROJECT_NAME})
+
+install(TARGETS calibration_path
   DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
