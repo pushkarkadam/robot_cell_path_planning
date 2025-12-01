@@ -13,6 +13,9 @@ find_package(tf2_geometry_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(moveit_msgs REQUIRED)
 find_package(moveit_visual_tools REQUIRED)
+find_package(yaml_cpp_vendor REQUIRED)
+find_package(yaml-cpp REQUIRED)
+find_package(Eigen3 REQUIRED)
 
 add_executable(point_move src/point_move.cpp)
 ament_target_dependencies(
@@ -36,10 +39,29 @@ ament_target_dependencies(
   "moveit_visual_tools"
 )
 
+add_executable(hello_yaml src/hello_yaml.cpp)
+ament_target_dependencies(
+  hello_yaml
+  "yaml_cpp_vendor"
+)
+
+add_executable(read_transformation src/read_transformation.cpp)
+ament_target_dependencies(
+  read_transformation
+  "yaml_cpp_vendor"
+  "Eigen3"
+)
+
 install(TARGETS point_move
   DESTINATION lib/${PROJECT_NAME})
 
 install(TARGETS calibration_path
+  DESTINATION lib/${PROJECT_NAME})
+
+install(TARGETS hello_yaml
+  DESTINATION lib/${PROJECT_NAME})
+
+install(TARGETS read_transformation
   DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
