@@ -52,6 +52,11 @@ ament_target_dependencies(
   "Eigen3"
 )
 
+add_executable(read_viapoints src/read_viapoints.cpp)
+ament_target_dependencies(
+  read_viapoints 
+)
+
 install(TARGETS point_move
   DESTINATION lib/${PROJECT_NAME})
 
@@ -62,6 +67,9 @@ install(TARGETS hello_yaml
   DESTINATION lib/${PROJECT_NAME})
 
 install(TARGETS read_transformation
+  DESTINATION lib/${PROJECT_NAME})
+
+install(TARGETS read_viapoints
   DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
