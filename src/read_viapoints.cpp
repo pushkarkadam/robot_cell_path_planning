@@ -5,8 +5,6 @@
 #include <string>
 #include <map>
 
-// using namespace std;
-
 int main() {
     std::ifstream file("/home/robot1/Documents/robot_coords.csv");
 
@@ -15,7 +13,7 @@ int main() {
     std::getline(file, line);
     std::stringstream headerStream(line);
 
-    std::vector<std::string> columnNames = {" ","x", "y", "z"};
+    std::vector<std::string> columnNames = {"x", "y", "z"};
 
     // Map of column to list of values 
     std::map<std::string, std::vector<double>> table;
