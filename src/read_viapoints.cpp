@@ -26,6 +26,16 @@ int main() {
     return 0;
 }
 
+/**
+* @brief Reads a CSV file of via points.
+* 
+* This function takes the csv file name and a vector of column names
+* and stores a Map for each of the column as a vector.
+* 
+* @param fileName The name of the CSV file.
+* @param columnNames An array of strings of the column names of the csv file.
+* @return A Map of column names to an array of double.
+*/
 std::map<std::string, std::vector<double>> readViaPoints(std::string fileName, std::vector<std::string> columnNames) {
     // Reading csv file
     std::ifstream file(fileName);
