@@ -5,15 +5,35 @@
 #include <string>
 #include <map>
 
+std::map<std::string, std::vector<double>> readViaPoints(std::string fileName, std::vector<std::string> columnNames);
+
 int main() {
-    std::ifstream file("/home/robot1/Documents/robot_coords.csv");
+
+    std::vector<std::string> columnNames = {"x", "y", "z"};
+
+    std::map<std::string, std::vector<double>> table = readViaPoints("/home/robot1/Documents/robot_coords.csv", columnNames);
+
+    // Print collected data
+    for (const std::string& name : columnNames) {
+        std::cout << name << ": ";
+
+        for (double value : table[name]) {
+            std::cout << value << " ";
+        }
+        std::cout << std::endl;
+    }
+
+    return 0;
+}
+
+std::map<std::string, std::vector<double>> readViaPoints(std::string fileName, std::vector<std::string> columnNames) {
+    // Reading csv file
+    std::ifstream file(fileName);
 
     std::string line;
 
     std::getline(file, line);
     std::stringstream headerStream(line);
-
-    std::vector<std::string> columnNames = {"x", "y", "z"};
 
     // Map of column to list of values 
     std::map<std::string, std::vector<double>> table;
@@ -34,15 +54,5 @@ int main() {
         }
     }
 
-    // Print collected data
-    for (const std::string& name : columnNames) {
-        std::cout << name << ": ";
-
-        for (double value : table[name]) {
-            std::cout << value << " ";
-        }
-        std::cout << std::endl;
-    }
-
-    return 0;
+    return table;
 }
