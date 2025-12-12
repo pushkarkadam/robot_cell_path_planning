@@ -28,7 +28,7 @@ ament_target_dependencies(
   "moveit_visual_tools"
 )
 
-add_executable(calibration_path src/calibration_path.cpp)
+add_executable(calibration_path src/calibration_path.cpp src/read_data.cpp)
 ament_target_dependencies(
   calibration_path
   "moveit_ros_planning_interface"
