@@ -4,6 +4,7 @@
 #include <thread>
 #include <moveit_visual_tools/moveit_visual_tools.h>
 #include <moveit/planning_scene_interface/planning_scene_interface.h>
+#include "robot_cell_path_planning/read_data.h"
 
 int main(int argc, char** argv)
 {
@@ -170,29 +171,15 @@ int main(int argc, char** argv)
     // List of waypoints
     std::vector<geometry_msgs::msg::Pose> waypoints;
 
-    
 
-    // float eval_point_x[] = {0.825,1.05562076,1.15968868,0.9292113,0.87891276,1.04329609,1.10618927,0.94121135,0.93252655,1.03143218,1.05226851,0.95332299};
-    // float eval_point_y[] = {-0.473,-0.32697376,-0.4914744,-0.63733321,-0.48489291,-0.3806577,-0.47935454,-0.58374082,-0.49698328,-0.43454754,-0.4671709,-0.5300323};
-    // float eval_point_z[] = {0.013,0.013,0.00991604,0.01400203,0.01192913,0.01139528,0.00912942,0.0130812,0.01247212,0.01025719,0.00992753,0.01241558,};
+    std::vector<std::string> columnNames = {"x", "y", "z"};
+    std::string fileName = "/home/robot1/Documents/robot_coords.csv";
 
-    
-    // case 1
-    // float eval_point_x[] = {0.825, 1.056, 1.16, 0.929, 0.879, 1.044, 1.106, 0.941, 0.933, 1.032, 1.052, 0.953};
-    // float eval_point_y[] = {-0.473, -0.327, -0.492, -0.637, -0.485, -0.38, -0.479, -0.584, -0.497, -0.435, -0.467, -0.53};
-    // float eval_point_z[] = {0.013, 0.013, 0.013, 0.014, 0.013, 0.012, 0.014, 0.013, 0.013, 0.013, 0.012, 0.014};
+    std::map<std::string, std::vector<double>> table = readViaPoints(fileName, columnNames);
 
-    // case 2
-    // float eval_point_x[] = {1.001, 1.156, 0.995, 0.84, 0.991, 1.101, 1.005, 0.894, 0.98, 1.047, 1.015, 0.949};
-    // float eval_point_y[] = {-0.326, -0.551, -0.661, -0.436, -0.38, -0.541, -0.607, -0.446, -0.434, -0.531, -0.553, -0.456};
-    // float eval_point_z[] = {0.012, 0.013, 0.015, 0.012, 0.012, 0.013, 0.013, 0.013, 0.013, 0.013, 0.014, 0.013};
-
-    // case 3
-    float eval_point_x[] = {0.832, 1.069, 1.161, 0.924, 0.884, 1.054, 1.109, 0.94, 0.937, 1.038, 1.056, 0.955};
-    float eval_point_y[] = {-0.485, -0.348, -0.506, -0.645, -0.498, -0.399, -0.494, -0.592, -0.51, -0.45, -0.482, -0.541};
-    float eval_point_z[] = {0.034, 0.033, 0.103, 0.099, 0.046, 0.045, 0.088, 0.088, 0.06, 0.059, 0.076, 0.074};
-
-    // float x_init = eval_point_x[0];
+    std::vector<double> eval_point_x = table["x"];
+    std::vector<double> eval_point_y = table["y"];
+    std::vector<double> eval_point_z = table["z"];
 
 
     auto const initial_pose = []{
