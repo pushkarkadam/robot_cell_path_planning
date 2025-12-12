@@ -7,8 +7,6 @@
 #include <map>
 #include "robot_cell_path_planning/read_data.h"
 
-// std::map<std::string, std::vector<double>> readViaPoints(std::string fileName, std::vector<std::string> columnNames);
-
 int main() {
 
     std::vector<std::string> columnNames = {"x", "y", "z"};
@@ -17,13 +15,10 @@ int main() {
 
     std::map<std::string, std::vector<double>> table = readViaPoints(fileName, columnNames);
 
-    // Print collected data
-    for (const std::string& name : columnNames) {
-        std::cout << name << ": ";
+    std::vector<double> eval_point_x = table["x"];
 
-        for (double value : table[name]) {
-            std::cout << value << " ";
-        }
+    for (double value: table["x"]) {
+        std::cout << value << "\n";
         std::cout << std::endl;
     }
 
