@@ -52,7 +52,7 @@ ament_target_dependencies(
   "Eigen3"
 )
 
-add_executable(read_viapoints src/read_viapoints.cpp)
+add_executable(read_viapoints src/read_viapoints.cpp src/read_data.cpp)
 ament_target_dependencies(
   read_viapoints 
 )
@@ -83,5 +83,29 @@ if(BUILD_TESTING)
   set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
+
+# Let the compiler search for headers in the include folder
+include_directories(include)
+
+# define a library target called read_data
+add_library(read_data src/read_data.cpp)
+
+# this line to export the library
+ament_export_targets(read_data HAS_LIBRARY_TARGET)
+
+# install the include/robot_cell_path_planning
+install(
+  DIRECTORY include/robot_cell_path_planning
+  DESTINATION include
+)
+
+install(
+  TARGETS read_data
+  EXPORT read_data
+  LIBRARY DESTINATION lib 
+  ARCHIVE DESTINATION lib 
+  RUNTIME DESTINATION bin 
+  INCLUDES DESTINATION include
+)
 
 ament_package()
