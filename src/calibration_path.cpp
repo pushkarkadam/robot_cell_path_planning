@@ -8,6 +8,13 @@
 
 int main(int argc, char** argv)
 {
+    if (argc != 2) {
+        std::cerr << "Usage:  ros2 robot_cell_path_planning calibration_path /home/<user>/Document/file.csv" << std::endl;
+    }
+
+    // Extracting CSV file
+    std::string fileName = argv[1];
+
     // Initialise ROS and create the Node
     rclcpp::init(argc, argv);
     auto const node = std::make_shared<rclcpp::Node>(
@@ -72,23 +79,6 @@ int main(int argc, char** argv)
     for (const auto& name : joint_names) {
         RCLCPP_INFO(logger, "Joint: %s", name.c_str());
     }
-
-    /*
-    - ur10e_shoulder_lift_joint
-    - ur10e_wrist_1_joint
-    - ur10e_wrist_3_joint
-    - ur10e_wrist_2_joint
-    - ur10e_shoulder_pan_joint
-    - ur10e_elbow_joint
-    position:
-    - -2.086670061151022
-    - 0.4681543546864013
-    - 3.263265609741211
-    - 1.383528709411621
-    - 5.837290287017822
-    - -2.046292543411255
-    */
-
 
     // Map of joint names to values
     std::map<std::string, double> joint_map = {
@@ -173,7 +163,6 @@ int main(int argc, char** argv)
 
 
     std::vector<std::string> columnNames = {"x", "y", "z"};
-    std::string fileName = "/home/robot1/Documents/robot_coords.csv";
 
     std::map<std::string, std::vector<double>> table = readViaPoints(fileName, columnNames);
 
@@ -181,25 +170,31 @@ int main(int argc, char** argv)
     std::vector<double> eval_point_y = table["y"];
     std::vector<double> eval_point_z = table["z"];
 
+    double x0 = eval_point_x[0];
+    double y0 = eval_point_y[0];
+    double z0 = eval_point_z[0];
 
-    auto const initial_pose = []{
+    auto const initial_pose = [x0, y0, z0]{
         geometry_msgs::msg::Pose msg;
         msg.orientation.x = -0.7071068;
         msg.orientation.y = 0;
         msg.orientation.z = 0.7071068;
         msg.orientation.w = 0;
-        msg.position.x = -0.825 + 0.020;
-        msg.position.y = 0.473 + 0.020;
-        msg.position.z = 0.013 + 0.030;
+        msg.position.x = -x0 + 0.020;
+        msg.position.y = -y0 + 0.020;
+        msg.position.z = z0 + 0.030;
         return msg;
     }();
 
     waypoints.push_back(initial_pose);
 
-    // geometry_msgs::msg::Pose pose = initial_pose;
     geometry_msgs::msg::Pose eval_point;
 
-    for (int i = 0; i < 12; i++) {
+    std::size_t array_size = eval_point_x.size();
+
+    int num_points = static_cast<int>(array_size);
+
+    for (int i = 0; i < num_points; i++) {
         eval_point.position.x = -eval_point_x[i]; // Negative signs transpose from 'base' to 'base_link'
         eval_point.position.y = -eval_point_y[i];
         eval_point.position.z = eval_point_z[i] + 0.010;
