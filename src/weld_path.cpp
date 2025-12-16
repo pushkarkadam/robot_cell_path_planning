@@ -190,7 +190,6 @@ int main(int argc, char** argv)
 
     waypoints.push_back(initial_pose);
 
-    // geometry_msgs::msg::Pose pose = initial_pose;
     geometry_msgs::msg::Pose eval_point;
 
     std::size_t array_size = eval_point_x.size();
