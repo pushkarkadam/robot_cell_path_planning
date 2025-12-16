@@ -5,7 +5,6 @@
 #include <moveit_visual_tools/moveit_visual_tools.h>
 #include <moveit/planning_scene_interface/planning_scene_interface.h>
 #include "robot_cell_path_planning/read_data.h"
-// #include <algorithm>
 
 int main(int argc, char** argv)
 {
