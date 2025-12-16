@@ -39,6 +39,17 @@ ament_target_dependencies(
   "moveit_visual_tools"
 )
 
+add_executable(weld_path src/weld_path.cpp src/read_data.cpp)
+ament_target_dependencies(
+  weld_path
+  "moveit_ros_planning_interface"
+  "rclcpp"
+  "tf2_geometry_msgs"
+  "geometry_msgs"
+  "moveit_msgs"
+  "moveit_visual_tools"
+)
+
 add_executable(hello_yaml src/hello_yaml.cpp)
 ament_target_dependencies(
   hello_yaml
@@ -61,6 +72,9 @@ install(TARGETS point_move
   DESTINATION lib/${PROJECT_NAME})
 
 install(TARGETS calibration_path
+  DESTINATION lib/${PROJECT_NAME})
+
+install(TARGETS weld_path
   DESTINATION lib/${PROJECT_NAME})
 
 install(TARGETS hello_yaml
