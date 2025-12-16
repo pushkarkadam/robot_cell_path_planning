@@ -8,6 +8,14 @@
 
 int main(int argc, char** argv)
 {
+
+    if (argc != 2) {
+        std::cerr << "Usage:  ros2 robot_cell_path_planning weld_path /home/<user>/Document/file.csv" << std::endl;
+    }
+
+    // Extracting CSV file
+    std::string fileName = argv[1];
+
     // Initialise ROS and create the Node
     rclcpp::init(argc, argv);
     auto const node = std::make_shared<rclcpp::Node>(
@@ -72,23 +80,6 @@ int main(int argc, char** argv)
     for (const auto& name : joint_names) {
         RCLCPP_INFO(logger, "Joint: %s", name.c_str());
     }
-
-    /*
-    - ur10e_shoulder_lift_joint
-    - ur10e_wrist_1_joint
-    - ur10e_wrist_3_joint
-    - ur10e_wrist_2_joint
-    - ur10e_shoulder_pan_joint
-    - ur10e_elbow_joint
-    position:
-    - -2.086670061151022
-    - 0.4681543546864013
-    - 3.263265609741211
-    - 1.383528709411621
-    - 5.837290287017822
-    - -2.046292543411255
-    */
-
 
     // Map of joint names to values
     std::map<std::string, double> joint_map = {
@@ -173,7 +164,6 @@ int main(int argc, char** argv)
 
 
     std::vector<std::string> columnNames = {"x", "y", "z"};
-    std::string fileName = "/home/robot1/Documents/weld_paths/weld1.csv";
 
     std::map<std::string, std::vector<double>> table = readViaPoints(fileName, columnNames);
 
