@@ -5,6 +5,7 @@
 #include <moveit_visual_tools/moveit_visual_tools.h>
 #include <moveit/planning_scene_interface/planning_scene_interface.h>
 #include "robot_cell_path_planning/read_data.h"
+// #include <algorithm>
 
 int main(int argc, char** argv)
 {
@@ -193,7 +194,11 @@ int main(int argc, char** argv)
     // geometry_msgs::msg::Pose pose = initial_pose;
     geometry_msgs::msg::Pose eval_point;
 
-    for (int i = 0; i < 2; i++) {
+    std::size_t array_size = eval_point_x.size();
+
+    int num_points = static_cast<int>(array_size);
+
+    for (int i = 0; i < num_points; i++) {
         eval_point.position.x = -eval_point_x[i]; // Negative signs transpose from 'base' to 'base_link'
         eval_point.position.y = -eval_point_y[i];
         eval_point.position.z = eval_point_z[i] + 0.010;
