@@ -235,10 +235,10 @@ int main(int argc, char** argv)
     draw_title("Point_Move");
     moveit_visual_tools.trigger();
 
-    for (size_t i = 0; i < waypoints.size(); i++) {
-        moveit_visual_tools.publishAxisLabeled(waypoints[i], "pt" + std::to_string(i));
-    }
-    moveit_visual_tools.trigger();
+    // for (size_t i = 0; i < waypoints.size(); i++) {
+    //     moveit_visual_tools.publishAxisLabeled(waypoints[i], "pt" + std::to_string(i));
+    // }
+    // moveit_visual_tools.trigger();
 
     // Execute the plan
     if (fraction > 0.0){
